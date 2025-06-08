@@ -8,8 +8,8 @@ import figlet from 'figlet';
 dotenv.config();
 
 // Banner
-console.log(chalk.cyan(figlet.textSync('Pharos Bot made by mooe', { horizontalLayout: 'full' })));
-console.log(chalk.green(`Bot Auto-TX ke Random Address | Max 25 TX / Hari\n`));
+console.log(chalk.cyan(figlet.textSync('Pharos bot'));
+console.log(chalk.green(`Bot Auto-TX ke Random Address | Max 25 TX / Hari\n made by mooe\n`));
 
 // Provider & Wallet
 const provider = new JsonRpcProvider('https://testnet.dplabs-internal.com', {
