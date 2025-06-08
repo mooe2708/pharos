@@ -1,3 +1,8 @@
-npm install dotenv ethers chalk figlet
-.env edit pk mu
-node bot.js
+npm install dotenv ethers chalk figlet\n
+
+
+.env edit pk mu\n
+
+
+
+node bot.js\n
