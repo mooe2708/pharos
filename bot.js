@@ -1,22 +1,25 @@
-require('dotenv').config();
-const { ethers } = require('ethers');
-const fs = require('fs');
-const path = require('path');
-const chalk = require('chalk');
-const figlet = require('figlet');
+import dotenv from 'dotenv';
+import { JsonRpcProvider, Wallet, parseEther } from 'ethers';
+import fs from 'fs';
+import path from 'path';
+import chalk from 'chalk';
+import figlet from 'figlet';
+
+dotenv.config();
 
 // Banner
-console.log(chalk.cyan(figlet.textSync('Pharos auto send made: by mooe', { horizontalLayout: 'full' })));
+console.log(chalk.cyan(figlet.textSync('Pharos Bot made by mooe', { horizontalLayout: 'full' })));
 console.log(chalk.green(`Bot Auto-TX ke Random Address | Max 25 TX / Hari\n`));
 
 // Provider & Wallet
-const provider = new ethers.JsonRpcProvider('https://testnet.dplabs-internal.com', {
+const provider = new JsonRpcProvider('https://testnet.dplabs-internal.com', {
   name: 'pharos-testnet',
   chainId: 688688,
 });
-const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+const wallet = new Wallet(process.env.PRIVATE_KEY, provider);
 
 // File counter
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const counterFile = path.join(__dirname, 'txcount.json');
 let txData = { date: '', count: 0 };
 
@@ -43,7 +46,7 @@ function resetIfNewDay() {
 }
 
 function generateRandomAddress() {
-  return ethers.Wallet.createRandom().address;
+  return Wallet.createRandom().address;
 }
 
 // Fungsi Kirim
@@ -60,7 +63,7 @@ async function sendToRandomAddress() {
     const to = generateRandomAddress();
     const tx = await wallet.sendTransaction({
       to: to,
-      value: ethers.parseEther('0.0001'),
+      value: parseEther('0.0001'),
     });
 
     console.log(chalk.blue(`🚀 TX #${txData.count + 1} terkirim ke:`), chalk.magenta(to));
@@ -77,6 +80,4 @@ async function sendToRandomAddress() {
 }
 
 // Loop setiap 15 detik
-setInterval(() => {
-  sendToRandomAddress();
-}, 15000);
+setInterval(sendToRandomAddress, 15000);
